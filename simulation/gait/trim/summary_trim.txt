@@ -1,0 +1,40 @@
+Hexapod CoM + Eco trim study @ weighed 1.75 kg
+Date: 24 Oct 2026 (America/Chicago)
+Mass: bodyMass=0.370, printMassScale=0.8811, total=1.750 kg
+MG996R stall: 0.948 N*m
+CoM mechanism: offset Hexapod body File Solid CenterOfMass in Solid local frame,
+  then hx_bake_masses. Fore(+)/aft(-) = Solid Z * sign(+1). CAD CoM=[66.38 4 -50.44] mm.
+Baseline gait: lift=140 us, stride=150 us, duty=0.56, Eco=2.4s
+
+case                          mode  com_mm    lift  stride    duty   fem%%   tib%%   mm/s   clr
+----------------------------------------------------------------------------------------------------
+com_+0mm_eco                   Eco       0    1.00    1.00    0.56   101.4    81.3   28.3  22.2
+com_+20mm_eco                  Eco      20    1.00    1.00    0.56    96.0    78.8   28.3  22.2
+com_+40mm_eco                  Eco      40    1.00    1.00    0.56    94.5    76.5   28.2  22.2
+com_-20mm_eco                  Eco     -20    1.00    1.00    0.56   105.5    83.7   28.3  22.2
+com_-40mm_eco                  Eco     -40    1.00    1.00    0.56   103.0    86.2   28.3  22.2
+lift_x0.75_eco                 Eco       0    0.75    1.00    0.56   104.2    80.6   28.0  15.2
+lift_x0.50_eco                 Eco       0    0.50    1.00    0.56    95.6    78.7   27.5   8.4
+stride_x0.75_eco               Eco       0    1.00    0.75    0.56   101.8    78.6   21.2  22.2
+stride_x0.50_eco               Eco       0    1.00    0.50    0.56    93.3    75.5   14.1  22.2
+duty_0.60_eco                  Eco       0    1.00    1.00    0.60    98.0    80.3   25.9  22.2
+duty_0.65_eco                  Eco       0    1.00    1.00    0.65   105.5    80.9   23.8  22.2
+stride75_duty60_eco            Eco       0    1.00    0.75    0.60    95.7    78.2   19.4  22.2
+lift75_stride75_duty60_eco     Eco       0    0.75    0.75    0.60    93.3    76.9   19.2  15.2
+portfolio_eco                  Eco      40    0.75    0.75    0.60    90.2    72.0   19.2  15.2
+portfolio_mild_eco             Eco      40    0.75    0.85    0.56    93.0    74.3   23.8  15.2
+baseline_sport               Sport       0    1.00    1.00    0.56   113.1    90.9   56.5  22.2
+bestcom_sport                Sport      40    1.00    1.00    0.56   109.1    85.6   56.5  22.2
+win_com_+40mm_eco_sport      Sport      40    1.00    1.00    0.56   109.1    85.6   56.5  22.2
+
+OUTCOME
+-------
+The +40 mm forward battery move was not built. The battery sits mid-to-aft
+lengthwise. Outdoor walks in Eco and Sport on the MG996Rs settled the servo
+question; no stronger servos were fitted. This file is the simulation sweep only.
+Raw time series for the +40 mm case are not kept.
+
+Lowest Eco femur in the sweep (not built): com_+40mm_eco
+  CoM +40 mm fore (Solid axis 3*+1)
+  peak femur 0.896 N*m (94.5% stall), tibia 0.725 (76.5%), coxa 0.454 (47.9%)
+  body speed 28.2 mm/s (67.8 mm/cycle), min clearance 22.2 mm

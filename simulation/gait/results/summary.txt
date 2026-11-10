@@ -1,0 +1,37 @@
+Hexapod v6 tripod gait - Simscape study
+Robot mass in simulation: 1.750 kg (printed parts x0.88, body 0.370 kg)
+MG996R stall at 5.0 V: 0.948 N*m (design limit 50%: 0.474 N*m)
+Assumptions: 11.11 us/deg, servo tau 30 ms, contact k=10000 N/m c=120 N/(m/s), mu_s=0.60 mu_d=0.45
+
+=== Eco (commanded cycle 2.40 s, analysed 8.70-15.90 s) ===
+Body: 28.3 mm/s forward (67.9 mm per cycle), height 104.4 mm, bob 0.3 mm, yaw drift -0.00 deg/cycle, lateral drift 0.0 mm, max tilt 0.04 deg, walked forward: 1
+Speed cap: need 858 us/s (77 deg/s), cap 1123 us/s (101 deg/s); MG996R no-load ~364 deg/s
+Feet down: all six 10.7% of the time, exactly three 86.5%, fewer than three 0.0%
+Peak |torque| (worst leg):  coxa 0.434 N*m (RM, 46% stall)  femur 0.962 N*m (LM, 101%)  tibia 0.770 N*m (LR, 81%)
+RMS torque (worst leg):     coxa 0.200  femur 0.545  tibia 0.442 N*m
+Peak commanded joint speed: coxa 37  femur 62  tibia 18 deg/s
+Leg  cycle_s  duty  TD_phase  LO_phase  clearance_mm  stride_mm  slip_mm  peakFn_N
+LF    2.400  0.565    0.025     0.590        22.2       26.5    23.45     5.66
+LM    2.400  0.554    0.033     0.587        22.7       36.1     1.10     7.73
+LR    2.400  0.564    0.029     0.592        22.3       26.3    23.83     5.94
+RF    2.400  0.565    0.025     0.590        22.2       26.2    23.45     5.65
+RM    2.400  0.554    0.033     0.587        22.7       36.4     1.10     7.73
+RR    2.400  0.564    0.029     0.592        22.3       26.0    23.83     5.94
+(commanded: duty 0.56, touchdown phase 0, liftoff phase 0.56)
+
+=== Sport (commanded cycle 1.20 s, analysed 5.10-8.70 s) ===
+Body: 56.5 mm/s forward (67.8 mm per cycle), height 104.3 mm, bob 0.2 mm, yaw drift -0.00 deg/cycle, lateral drift 0.0 mm, max tilt 0.04 deg, walked forward: 1
+Speed cap: need 1716 us/s (154 deg/s), cap 2195 us/s (198 deg/s); MG996R no-load ~364 deg/s
+Feet down: all six 1.7% of the time, exactly three 95.3%, fewer than three 0.0%
+Peak |torque| (worst leg):  coxa 0.491 N*m (LM, 52% stall)  femur 1.072 N*m (LM, 113%)  tibia 0.862 N*m (LR, 91%)
+RMS torque (worst leg):     coxa 0.198  femur 0.562  tibia 0.450 N*m
+Peak commanded joint speed: coxa 73  femur 124  tibia 35 deg/s
+Leg  cycle_s  duty  TD_phase  LO_phase  clearance_mm  stride_mm  slip_mm  peakFn_N
+LF    1.200  0.520    0.083     0.602        22.2       25.3    21.59     5.86
+LM    1.200  0.508    0.094     0.602        22.7       34.0     0.12     8.21
+LR    1.200  0.517    0.090     0.606        22.2       24.8    22.62     6.75
+RF    1.200  0.520    0.083     0.602        22.2       25.0    21.59     5.86
+RM    1.200  0.508    0.094     0.602        22.7       34.3     0.12     8.21
+RR    1.200  0.517    0.090     0.606        22.2       24.5    22.62     6.75
+(commanded: duty 0.56, touchdown phase 0, liftoff phase 0.56)
+
