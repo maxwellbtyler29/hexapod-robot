@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="475" viewBox="0 0 900 475">
+<rect width="900" height="475" fill="#f8fafc"/>
+<g font-family="Arial, sans-serif">
+<text x="450" y="38" fill="#334155" font-size="25" text-anchor="middle">ONE FOOT STEP</text>
+<text x="450" y="66" fill="#334155" font-size="17" text-anchor="middle">Local X stays at 200 mm</text>
+<path d="M160 365 H740" stroke="#dce4eb"/>
+<text x="140" y="371" fill="#334155" font-size="15" text-anchor="end">-100</text>
+<path d="M160 280 H740" stroke="#dce4eb"/>
+<text x="140" y="286" fill="#334155" font-size="15" text-anchor="end">-95</text>
+<path d="M160 195 H740" stroke="#dce4eb"/>
+<text x="140" y="201" fill="#334155" font-size="15" text-anchor="end">-90</text>
+<text x="105" y="110" fill="#334155" font-size="15" text-anchor="middle">Z (mm)</text>
+<path d="M230 365 V138.333 H670 V365" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 6"/>
+<path d="M230 365 C230 138.333 670 138.333 670 365" fill="none" stroke="#087f8c" stroke-width="5"/>
+<path d="M230 365 H670" stroke="#e58a20" stroke-width="5"/>
+<path d="M480 365 H420 L431 357 M420 365 L431 373" fill="none" stroke="#a65700" stroke-width="3"/>
+<path d="M420 200 H480 L469 192 M480 200 L469 208" fill="none" stroke="#087f8c" stroke-width="3"/>
+<text x="450" y="172" fill="#087f8c" font-size="17" text-anchor="middle">Swing: rear to front</text>
+<text x="450" y="349" fill="#a65700" font-size="17" text-anchor="middle">Stance: front to rear</text>
+<text x="450" y="258" fill="#334155" font-size="17" text-anchor="middle">Peak lift = 10 mm</text>
+<text x="450" y="280" fill="#334155" font-size="14" text-anchor="middle">Middle control points sit 13.33 mm above the baseline</text>
+<circle cx="230.0" cy="365.0" r="5" fill="#334155"/>
+<text x="230.0" y="392.0" fill="#334155" font-size="17" text-anchor="middle">P0</text>
+<circle cx="230.0" cy="138.33333333333343" r="5" fill="#334155"/>
+<text x="230.0" y="125.33333333333343" fill="#334155" font-size="17" text-anchor="middle">P1</text>
+<circle cx="670.0" cy="138.33333333333343" r="5" fill="#334155"/>
+<text x="670.0" y="125.33333333333343" fill="#334155" font-size="17" text-anchor="middle">P2</text>
+<circle cx="670.0" cy="365.0" r="5" fill="#334155"/>
+<text x="670.0" y="392.0" fill="#334155" font-size="17" text-anchor="middle">P3</text>
+<text x="230" y="420" fill="#334155" font-size="17" text-anchor="middle">Rear: Y = -10 mm</text>
+<text x="670" y="420" fill="#334155" font-size="17" text-anchor="middle">Front: Y = +10 mm</text>
+<text x="450" y="455" fill="#334155" font-size="15" text-anchor="middle">Dashed lines join the control points; the foot follows the colored path.</text>
+</g></svg>
