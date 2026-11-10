@@ -1,0 +1,55 @@
+# --- MATLAB / Simulink ---
+slprj/
+*.slxc
+*.asv
+*.autosave
+*.mex*
+*.slx.r20*
+*.mdl.r20*
+codegen/
+
+# --- SolidWorks / Office temp + lock files ---
+~$*
+*.SLDBAK
+*.tmp
+
+# --- Firmware (PlatformIO / ESP32) ---
+.pio/
+.pioenvs/
+.piolibdeps/
+# Generated at build time by firmware/pack_web.py
+firmware/src/web_page.h
+firmware/src/web_assets.h
+firmware/src/*_web_page.h
+
+# Regenerated gait time series. Summaries and plots in simulation/gait/results are tracked.
+simulation/gait/results/*_body.csv
+simulation/gait/results/*_contact.csv
+simulation/gait/results/*_foot_paths_*.csv
+simulation/gait/results/*_joint_*.csv
+simulation/gait/results/*.mat
+simulation/gait/results/*.slx
+simulation/gait/trim/win_*/
+# Local Wi-Fi credentials (copy wifi_secrets.example.h -> wifi_secrets.h)
+wifi_secrets.h
+
+# --- Build outputs ---
+build/
+*.exe
+*.pdb
+*.o
+*.obj
+compiler-cache/
+
+# --- Node / Python ---
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# --- Misc ---
+*.log
+tmp/
+.DS_Store
+Thumbs.db
+desktop.ini
