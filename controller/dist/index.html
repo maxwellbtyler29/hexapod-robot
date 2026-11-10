@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#06131e">
+  <meta name="description" content="HEXAPOD control center for the ESP32-connected six-legged robot.">
+  <title>HEXAPOD — Control Center</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="startup.css">
+  <link rel="stylesheet" href="hologram.css">
+  <link rel="stylesheet" href="control.css">
+</head>
+<body class="booting">
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-icon">⬡</span><span>HEXAPOD</span><small>P3DRO / CONTROL CENTER</small></div>
+      <div class="top-status">
+        <span id="link-pill" class="link-pill">DISCONNECTED</span>
+        <div class="battery" id="battery" role="status" aria-label="Battery level unavailable">
+          <span class="battery-icon"><i id="battery-fill"></i></span>
+          <span><strong id="battery-value">—%</strong><small id="battery-caption">BATTERY / NO SENSOR</small></span>
+        </div>
+        <button id="outputs-off" class="stop" type="button">■ Outputs off</button>
+      </div>
+    </header>
+    <main class="control-grid">
+      <aside class="module library" aria-label="Movement library">
+        <div class="module-heading"><span class="eyebrow">01 / MOVEMENT LIBRARY</span><span id="library-count">06</span></div>
+        <h2>Choose a move.</h2>
+        <p class="module-subtitle">Live routines use your saved ready poses.</p>
+        <div class="library-scroll" id="library-list">
+          <button class="move-card" data-move="wake"><span class="move-glyph">↗</span><span><strong>Wake up</strong><small>Hold saved ready pose</small></span><span class="move-arrow">→</span></button>
+          <button class="move-card" data-move="forward"><span class="move-glyph">⇡</span><span><strong>Forward step</strong><small>One tripod cycle</small></span><span class="move-arrow">→</span></button>
+          <button class="move-card" data-move="backward"><span class="move-glyph">⇣</span><span><strong>Backward step</strong><small>One tripod cycle</small></span><span class="move-arrow">→</span></button>
+          <button class="move-card" data-move="crab-left"><span class="move-glyph">⇠</span><span><strong>Crab left</strong><small>One tuned sideways cycle</small></span><span class="move-arrow">→</span></button>
+          <button class="move-card" data-move="crab-right"><span class="move-glyph">⇢</span><span><strong>Crab right</strong><small>One tuned sideways cycle</small></span><span class="move-arrow">→</span></button>
+          <button class="move-card" data-move="park"><span class="move-glyph">⌄</span><span><strong>Park</strong><small>Return to ready and hold</small></span><span class="move-arrow">→</span></button>
+          <div class="library-divider">PLANNED MOVES</div>
+          <button class="move-card pending" type="button" disabled><span class="move-glyph">✧</span><span><strong>Stretch</strong><small>Needs motion validation</small></span><span class="move-tag">LATER</span></button>
+          <button class="move-card pending" type="button" disabled><span class="move-glyph">♫</span><span><strong>Dance</strong><small>Needs motion validation</small></span><span class="move-tag">LATER</span></button>
+          <button class="move-card pending" type="button" disabled><span class="move-glyph">↑</span><span><strong>Jump</strong><small>Needs load validation</small></span><span class="move-tag">LATER</span></button>
+        </div>
+        <p class="library-foot">Motion stays within stored joint limits.</p>
+      </aside>
+      <section class="module command-center" aria-label="Control center">
+        <div class="module-heading"><span class="eyebrow">02 / CONTROL CENTER</span><span id="system-state">STANDBY</span></div>
+        <div class="speed-readout"><span>TRAVEL SPEED</span><strong id="travel-speed">— <small>mm/s</small></strong><em id="speed-caption">ODOMETRY NOT INSTALLED</em></div>
+        <label class="control-label" for="drive-mode">MOVEMENT MODE</label>
+        <select id="drive-mode"><option value="walk">Walk / forward & backward</option><option value="crab">Crabwalk / left & right</option></select>
+        <div class="tempo-heading"><span>GAIT CYCLE</span><small>Separate from servo speed</small></div>
+        <div class="tempo-switch" role="group" aria-label="Gait cycle tempo">
+          <button id="eco" type="button" aria-pressed="true"><strong>ECO</strong><small>2.4 s / cycle</small></button>
+          <button id="sport" type="button" aria-pressed="false"><strong>SPORT</strong><small>1.2 s / cycle</small></button>
+        </div>
+        <div class="system-actions">
+          <button id="enable-motion" class="primary" type="button">Enable ready pose <span>→</span></button>
+          <button id="test-cycle" class="quiet" type="button">Test one cycle</button>
+        </div>
+        <p id="control-message" role="status">Connect to the robot to begin.</p>
+        <button id="view-camera" class="camera-button" type="button"><span>▣</span> VIEW CAMERA <span>↗</span></button>
+      </section>
+      <section class="module joystick-panel" aria-label="Joystick and servo speed">
+        <div class="module-heading"><span class="eyebrow">03 / DRIVE</span><span id="output-state">OUTPUTS OFF</span></div>
+        <div class="stick-label" id="stick-label">FORWARD / BACKWARD</div>
+        <div class="joystick-area">
+          <div id="joystick" role="group" tabindex="0" aria-label="Joystick. Drag or use arrow keys when outputs are enabled." aria-disabled="true">
+            <div class="stick-ring"></div><div class="stick-axis-x"></div><div class="stick-axis-y"></div>
+            <div id="knob">✥</div>
+          </div>
+          <div class="stick-coords"><span>X <b id="x-value">+0.00</b></span><span>Y <b id="y-value">+0.00</b></span></div>
+        </div>
+        <div class="servo-speed"><div><label for="servo-rate">SERVO SPEED</label><output id="servo-rate-value">650 µs/s</output></div><input id="servo-rate" type="range" min="50" max="5000" step="50" value="650"><div class="range-ends"><span>50</span><span>5000 µs/s</span></div></div>
+        <p class="stick-foot" id="stick-foot">Hold the joystick to walk. Release to finish the current cycle.</p>
+      </section>
+      <section class="module camera-view" id="camera-view" hidden aria-label="Camera view">
+        <div class="module-heading"><span class="eyebrow">CAMERA / P3DRO</span><button id="close-camera" class="quiet" type="button">← Control center</button></div>
+        <div class="camera-placeholder"><span>◉</span><strong>CAMERA FEED</strong><p>No camera is connected yet. This panel is ready for the future video feed.</p></div>
+      </section>
+    </main>
+  </div>
+  <script src="serial-link.js"></script>
+  <script src="wifi-link.js"></script>
+  <script src="motion-plan.js"></script>
+  <script src="control.js"></script>
+  <script src="hologram.js"></script>
+</body>
+</html>

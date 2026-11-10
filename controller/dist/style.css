@@ -1,0 +1,23 @@
+:root{--bg:#040b12;--panel:#081b29;--panel2:#0c2534;--line:#244b5c;--cyan:#65deff;--text:#e5f3f8;--muted:#93aebb}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif;background-image:radial-gradient(ellipse at 50% 15%,#0b3042,transparent 72%);overflow:hidden}
+button,select,input{font:inherit}
+button{color:inherit;cursor:pointer}
+button:disabled{opacity:.46;cursor:not-allowed}
+button:focus-visible,select:focus-visible,input:focus-visible,#joystick:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.app{width:100%;height:100dvh;max-width:1600px;margin:auto;display:flex;flex-direction:column;padding:0 max(16px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));min-height:0}
+.primary,.quiet,.stop{min-height:42px;border-radius:7px;padding:10px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:650}
+.primary{background:#0f3748;border:1px solid #67e0ff;color:#b9f5ff;box-shadow:inset 0 0 15px #27d8ff13,0 0 17px #27d8ff10}
+.primary:hover{background:#19546a;color:#fff}
+.quiet{background:#0b2230;border:1px solid #345d70;color:#c6e9f7}
+.quiet:hover{border-color:var(--cyan)}
+.stop{background:#351b23;border:1px solid #8a494e;color:#ff9a9f}
+.stop:hover{background:#4b222d}
+.eyebrow{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1.5px;color:var(--cyan)}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Arial Narrow",Impact,sans-serif;letter-spacing:3px;font-size:24px;font-weight:600;white-space:nowrap}
+.brand-icon{color:var(--cyan);font-size:34px}
+.brand small{font:9px ui-monospace,SFMono-Regular,Consolas,monospace;color:#7da8bc;letter-spacing:1px;border-left:1px solid var(--line);padding-left:14px;margin-left:5px}
+.booting>.app{visibility:hidden}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
