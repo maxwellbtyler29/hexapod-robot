@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "joints": [
+    {
+      "leg": "LF",
+      "joint": "hip",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "LF",
+      "joint": "knee",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "LF",
+      "joint": "foot",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false,
+      "note": "2026-10-20: user reindexed all foot horns; center 1500 us. Old 1238 us stepping reference is superseded; assembled travel limits remain unverified."
+    },
+    {
+      "leg": "LM",
+      "joint": "hip",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "LM",
+      "joint": "knee",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "LM",
+      "joint": "foot",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false,
+      "note": "2026-10-20: user reindexed all foot horns; center 1500 us. Old 1238 us stepping reference is superseded; assembled travel limits remain unverified."
+    },
+    {
+      "leg": "LR",
+      "joint": "hip",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "LR",
+      "joint": "knee",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "LR",
+      "joint": "foot",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false,
+      "note": "2026-10-20: user reindexed all foot horns; center 1500 us. Old 1238 us stepping reference is superseded; assembled travel limits remain unverified."
+    },
+    {
+      "leg": "RF",
+      "joint": "hip",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "RF",
+      "joint": "knee",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "RF",
+      "joint": "foot",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false,
+      "note": "2026-10-20: user reindexed all foot horns; center 1500 us. Old 1238 us stepping reference is superseded; assembled travel limits remain unverified."
+    },
+    {
+      "leg": "RM",
+      "joint": "hip",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "RM",
+      "joint": "knee",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "RM",
+      "joint": "foot",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false,
+      "note": "2026-10-20: user reindexed all foot horns; center 1500 us. Old 1238 us stepping reference is superseded; assembled travel limits remain unverified."
+    },
+    {
+      "leg": "RR",
+      "joint": "hip",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "RR",
+      "joint": "knee",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false
+    },
+    {
+      "leg": "RR",
+      "joint": "foot",
+      "min": 1450,
+      "center": 1500,
+      "max": 1550,
+      "direction": 1,
+      "verified": false,
+      "note": "2026-10-20: user reindexed all foot horns; center 1500 us. Old 1238 us stepping reference is superseded; assembled travel limits remain unverified."
+    }
+  ]
+}

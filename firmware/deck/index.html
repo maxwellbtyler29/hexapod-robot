@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#040b12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="P3DRO">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <title>P3DRO Command Deck</title>
+  <link rel="stylesheet" href="deck.css">
+</head>
+<body>
+  <div class="boot" id="boot">
+    <div class="hex">⬡</div>
+    <div class="mono">P3DRO / COMMAND DECK</div>
+    <p id="boot-text">Join the <b>Hexapod-Control</b> Wi-Fi, then connect. Outputs stay off until you stand the robot up.</p>
+    <button class="primary" id="connect" type="button">Connect to robot →</button>
+    <p class="mono" id="boot-mode"></p>
+  </div>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-icon">⬡</span><span>HEXAPOD</span><small>P3DRO / COMMAND DECK</small></div>
+      <div class="top-status">
+        <span class="pill" id="link-pill">OFFLINE</span>
+        <span class="pill state" id="arm-pill">OUTPUTS OFF</span>
+        <button class="stop" id="outputs-off" type="button">■ Outputs off</button>
+      </div>
+    </header>
+    <main class="grid" id="grid">
+      <aside class="module library" aria-label="Moves">
+        <div class="module-heading"><span class="eyebrow">01 / MOVES</span><span id="setup-state">—</span></div>
+        <h2>Choose a move.</h2>
+        <p class="sub">Everything starts from and returns to your saved ready pose.</p>
+        <div class="scroll" id="moves">
+          <button class="move-card" data-act="stand"><span class="move-glyph">↥</span><span><strong>Stand up</strong><small>Energise servos one by one, rise to ready</small></span></button>
+          <button class="move-card" data-act="ready"><span class="move-glyph">◎</span><span><strong>Ready pose</strong><small>Ease every joint back to ready</small></span></button>
+          <button class="move-card" data-act="park"><span class="move-glyph">⌄</span><span><strong>Sit &amp; power down</strong><small>Lower the body slowly, then outputs off</small></span></button>
+          <div class="divider">ONE-CYCLE TESTS · REQUIRED ONCE PER DIRECTION</div>
+          <button class="move-card" data-test="1"><span class="move-glyph">⇡</span><span><strong>Test forward</strong><small>One tripod cycle, then stop</small></span><span class="tag" data-tested="1">—</span></button>
+          <button class="move-card" data-test="2"><span class="move-glyph">⇣</span><span><strong>Test backward</strong><small>One tripod cycle, then stop</small></span><span class="tag" data-tested="2">—</span></button>
+          <button class="move-card" data-test="3"><span class="move-glyph">⇠</span><span><strong>Test crab left</strong><small>One sideways cycle, then stop</small></span><span class="tag" data-tested="3">—</span></button>
+          <button class="move-card" data-test="4"><span class="move-glyph">⇢</span><span><strong>Test crab right</strong><small>One sideways cycle, then stop</small></span><span class="tag" data-tested="4">—</span></button>
+          <div class="divider">SETUP</div>
+          <a class="move-card" href="/calibration/" id="cal-link" style="color:inherit;text-decoration:none"><span class="move-glyph">⚙</span><span><strong>Calibration</strong><small>Ready pulses, limits, directions, gait tuning</small></span><span class="tag">→</span></a>
+        </div>
+        <p class="foot">Turning needs both forward and backward tests. Changing calibration clears the tests.</p>
+      </aside>
+      <section class="module center" aria-label="Control center">
+        <div class="module-heading"><span class="eyebrow">02 / CONTROL CENTER</span><span id="i2c-state">—</span></div>
+        <div class="readout" id="readout"><span class="label">ROBOT STATE</span><strong id="state-big">OFFLINE</strong><em id="state-detail">Not connected</em><div class="phase"><i id="phase-bar"></i></div></div>
+        <div class="banner" id="fault" hidden><span id="fault-text"></span><button class="quiet" id="recover" type="button">Recover</button></div>
+        <label class="label" for="drive-mode">MOVEMENT MODE</label>
+        <select id="drive-mode"><option value="walk">Walk · stick up/down drives, left/right turns</option><option value="crab">Crab · stick left/right slides, up/down drives</option></select>
+        <div class="row"><span class="label">GAIT TEMPO</span><small id="tempo-note">cycle time</small></div>
+        <div class="seg" role="group" aria-label="Gait tempo">
+          <button id="eco" type="button" aria-pressed="true"><strong>ECO</strong><small id="eco-ms">2.4 s / cycle</small></button>
+          <button id="sport" type="button" aria-pressed="false"><strong>SPORT</strong><small id="sport-ms">1.2 s / cycle</small></button>
+        </div>
+        <div class="cap" id="cap-box">
+          <div class="row"><label class="label" for="cap">SERVO SPEED LIMIT</label><output id="cap-value">AUTO</output></div>
+          <input id="cap" type="range" min="0" max="5000" step="50" value="0" aria-describedby="cap-note">
+          <small class="foot" id="cap-note" style="margin:0">Far left = Auto (sized to the tempo). A lower limit is a safety clamp and will be reported when it slows the gait.</small>
+        </div>
+        <p class="msg" id="msg" role="status">Connect to the robot to begin.</p>
+      </section>
+      <section class="module drive" aria-label="Drive">
+        <div class="module-heading"><span class="eyebrow">03 / DRIVE</span><span id="drive-state">IDLE</span></div>
+        <div class="stick-label" id="stick-label">FORWARD / TURN</div>
+        <div class="stick-area">
+          <div id="joystick" role="group" tabindex="0" aria-label="Joystick: drag, or use arrow keys" aria-disabled="true"><div class="ring"></div><div class="ax x"></div><div class="ax y"></div><div id="knob">✥</div></div>
+          <div class="coords"><span>X <b id="x-value">+0.00</b></span><span>Y <b id="y-value">+0.00</b></span></div>
+        </div>
+        <p class="foot" id="stick-foot">Hold the stick to walk. Let go and the robot finishes its step and settles at ready.</p>
+      </section>
+      <!-- Reserved for the future camera module: kept in the layout but hidden until a camera exists. -->
+      <section class="module camera-slot" id="camera-slot" data-reserved="camera" hidden aria-label="Camera (reserved)">
+        <div class="module-heading"><span class="eyebrow">04 / CAMERA</span><span>RESERVED</span></div>
+      </section>
+    </main>
+  </div>
+  <script src="link.js"></script>
+  <script src="deck.js"></script>
+</body>
+</html>

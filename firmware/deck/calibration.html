@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#040b12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="P3DRO Setup">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <title>P3DRO Calibration</title>
+  <link rel="stylesheet" href="deck.css">
+  <style>
+  body{overflow:auto}.app{height:auto;min-height:100dvh}
+  .cal{display:grid;grid-template-columns:minmax(280px,1.1fr) minmax(300px,1fr);gap:10px;padding:10px 0}
+  .legs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .leg{border:1px solid #2b5368;border-radius:9px;padding:7px;background:#0a1f2c}
+  .leg h3{margin:0 0 5px;font:10px var(--mono);letter-spacing:1.2px;color:var(--cyan)}
+  .joint{width:100%;display:grid;grid-template-columns:44px 1fr auto;gap:6px;align-items:center;padding:6px;border:1px solid #23465a;border-radius:6px;background:#0b2433;margin-bottom:5px;text-align:left}
+  .joint[aria-pressed=true]{border-color:var(--cyan);background:#123e50;box-shadow:inset 0 0 12px #67e0ff22}
+  .joint b{font:11px var(--mono)}.joint small{font:9px var(--mono);color:#8fb2c1}
+  .joint .marks{font:9px var(--mono);white-space:nowrap}.ok{color:var(--good)}.no{color:var(--warn)}.live{color:var(--cyan)}
+  .big{font:600 44px var(--narrow);letter-spacing:1px;line-height:1;text-align:center;margin:6px 0}
+  .nudges{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .nudges button{min-height:44px;font:12px var(--mono)}
+  .field{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;align-items:end}
+  .field input{width:100%;height:40px;background:#102a3a;border:1px solid #3c6478;border-radius:6px;color:var(--text);padding:6px 8px;font:12px var(--mono)}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .section{border-top:1px solid #23465a;padding-top:9px;margin-top:9px;display:flex;flex-direction:column;gap:7px}
+  .tests{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .params{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.params label{font:8px var(--mono);color:#9dc5d8;display:flex;flex-direction:column;gap:3px}
+  .params input{width:100%;height:36px;background:#102a3a;border:1px solid #3c6478;border-radius:6px;color:var(--text);padding:4px 6px;font:12px var(--mono)}
+  .toggle{display:flex;align-items:center;gap:8px;font-size:12px}
+  .hint{font-size:11px;color:#9ab7c6;line-height:1.4;margin:0}
+  @media (max-width:760px){.cal{grid-template-columns:1fr}.params{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" id="deck-link" href="/"><span class="brand-icon">⬡</span><span>HEXAPOD</span><small>P3DRO / CALIBRATION</small></a>
+      <div class="top-status">
+        <span class="pill" id="link-pill">OFFLINE</span>
+        <span class="pill state" id="arm-pill">OUTPUTS OFF</span>
+        <button class="stop" id="outputs-off" type="button">■ Outputs off</button>
+      </div>
+    </header>
+    <div class="banner" id="fault" hidden style="margin-top:8px"><span id="fault-text"></span><button class="quiet" id="recover" type="button">Recover</button></div>
+    <main class="cal">
+      <section class="module" aria-label="Joints">
+        <div class="module-heading"><span class="eyebrow">01 / JOINTS</span><span id="summary">—</span></div>
+        <p class="hint" style="margin:6px 0 8px">Tap a joint. It energises at its <b>saved</b> ready pulse (no jump to 1500) and every other powered joint keeps holding. ✓R = ready pulse saved, ✓D = direction checked.</p>
+        <div class="legs" id="legs"></div>
+        <div class="actions" style="margin-top:6px">
+          <button class="primary" id="hold-all" type="button">Hold all at ready</button>
+          <button class="quiet" id="connect" type="button">Connect</button>
+        </div>
+      </section>
+      <section class="module" aria-label="Selected joint">
+        <div class="module-heading"><span class="eyebrow">02 / SELECTED JOINT</span><span id="sel-name">NONE</span></div>
+        <div class="big" id="pulse">— µs</div>
+        <div class="row"><small id="sel-saved">saved —</small><small id="sel-limits">limits —</small></div>
+        <input type="range" id="slider" min="500" max="2500" step="1" value="1500" disabled aria-label="Pulse">
+        <div class="nudges" id="nudges">
+          <button class="quiet" data-n="-50">−50</button><button class="quiet" data-n="-10">−10</button><button class="quiet" data-n="-2">−2</button><button class="quiet" data-n="-1">−1</button>
+          <button class="quiet" data-n="1">+1</button><button class="quiet" data-n="2">+2</button><button class="quiet" data-n="10">+10</button><button class="quiet" data-n="50">+50</button>
+        </div>
+        <p class="hint">The servo boards step in ≈4.9 µs increments, so ±1/±2 nudges are saved exactly but may only move the horn every few presses.</p>
+        <div class="actions"><button class="primary" id="save-ready" type="button">Save as ready pulse</button><button class="quiet" id="release" type="button">Release this joint</button></div>
+        <div class="section">
+          <span class="label">DIRECTION</span>
+          <p class="hint" id="dir-hint">Hip +: foot swings toward the head. Knee +: foot lifts. Foot +: foot tucks inward.</p>
+          <div class="actions"><button class="quiet" id="wiggle" type="button">Wiggle + (40 µs)</button><label class="toggle"><input type="checkbox" id="invert"> Invert this joint</label></div>
+          <button class="primary" id="dir-ok" type="button">Direction is correct — save</button>
+        </div>
+        <div class="section">
+          <span class="label">LIMITS</span>
+          <div class="field"><label class="label">MIN<input id="lim-min" inputmode="numeric"></label><label class="label">MAX<input id="lim-max" inputmode="numeric"></label><button class="quiet" id="save-limits" type="button">Save limits</button></div>
+          <p class="hint">Limits only need to contain this joint's ready pulse (they no longer have to include 1500).</p>
+        </div>
+        <p class="msg" id="msg" role="status">Connect to begin.</p>
+      </section>
+      <section class="module" aria-label="Tests">
+        <div class="module-heading"><span class="eyebrow">03 / ONE-CYCLE TESTS</span><span id="tests-count">0 RUN HERE</span></div>
+        <p class="hint" style="margin:6px 0">Chassis supported, feet clear. Needs all 18 servos holding at ready ("Hold all at ready", then wait). Any calibration change clears the tests.</p>
+        <div class="tests" id="tests">
+          <button class="quiet" data-test="1">Forward <span class="tag" data-tested="1">—</span></button>
+          <button class="quiet" data-test="2">Backward <span class="tag" data-tested="2">—</span></button>
+          <button class="quiet" data-test="3">Crab left <span class="tag" data-tested="3">—</span></button>
+          <button class="quiet" data-test="4">Crab right <span class="tag" data-tested="4">—</span></button>
+        </div>
+      </section>
+      <section class="module" aria-label="Gait tuning">
+        <div class="module-heading"><span class="eyebrow">04 / GAIT TUNING</span><span id="need">—</span></div>
+        <div class="params" id="params">
+          <label>STRIDE µs<input data-p="stride" inputmode="numeric"></label><label>LIFT µs<input data-p="lift" inputmode="numeric"></label>
+          <label>FOOT TUCK µs<input data-p="tuck" inputmode="numeric"></label><label>CRAB REACH µs<input data-p="reach" inputmode="numeric"></label>
+          <label>CRAB KNEE MIX %<input data-p="mix" inputmode="numeric"></label><label>ECO CYCLE ms<input data-p="eco" inputmode="numeric"></label>
+          <label>SPORT CYCLE ms<input data-p="sport" inputmode="numeric"></label><label>SIT DEPTH µs<input data-p="park" inputmode="numeric"></label>
+        </div>
+        <div class="actions" style="margin-top:7px"><button class="primary" id="save-params" type="button">Save gait settings</button><button class="quiet" id="default-params" type="button">Defaults</button></div>
+        <div class="section">
+          <span class="label">BACKUP</span>
+          <div class="actions"><button class="quiet" id="export" type="button">Download backup</button><label class="quiet" style="display:inline-flex;align-items:center;justify-content:center;border-radius:7px;min-height:42px;font-size:12px;cursor:pointer">Restore backup<input type="file" id="import" accept=".json" hidden></label></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="link.js"></script>
+  <script src="cal.js"></script>
+</body>
+</html>
